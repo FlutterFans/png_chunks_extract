@@ -1,7 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
-
 import 'etc32.dart';
 
 var uint8 = Uint8List(4);
@@ -9,19 +7,19 @@ var int32 = Int32List.view(uint8.buffer);
 var uint32 = Uint32List.view(uint8.buffer);
 
 List<Map<String, dynamic>> extractChunks(Uint8List data) {
-  if (data[0] != 0x89) throw ErrorDescription('Invalid .png file header');
-  if (data[1] != 0x50) throw ErrorDescription('Invalid .png file header');
-  if (data[2] != 0x4E) throw ErrorDescription('Invalid .png file header');
-  if (data[3] != 0x47) throw ErrorDescription('Invalid .png file header');
+  if (data[0] != 0x89) throw ArgumentError('Invalid .png file header');
+  if (data[1] != 0x50) throw ArgumentError('Invalid .png file header');
+  if (data[2] != 0x4E) throw ArgumentError('Invalid .png file header');
+  if (data[3] != 0x47) throw ArgumentError('Invalid .png file header');
   if (data[4] != 0x0D) {
-    throw ErrorDescription('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
   if (data[5] != 0x0A) {
-    throw ErrorDescription('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
-  if (data[6] != 0x1A) throw ErrorDescription('Invalid .png file header');
+  if (data[6] != 0x1A) throw ArgumentError('Invalid .png file header');
   if (data[7] != 0x0A) {
-    throw ErrorDescription('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
 
   var ended = false;
@@ -52,7 +50,7 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
 
     // The IHDR header MUST come first.
     if (chunks.isEmpty && name != 'IHDR') {
-      throw ErrorDescription('IHDR header missing');
+      throw UnsupportedError('IHDR header missing');
     }
 
     // The IEND header marks the end of the file,
@@ -82,7 +80,7 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
     var crcActual = int32[0];
     var crcExpect = Crc32.getCrc32(chunk);
     if (crcExpect != crcActual) {
-      throw ErrorDescription('CRC values for $name header do not match, PNG file is likely corrupted');
+      throw UnsupportedError('CRC values for $name header do not match, PNG file is likely corrupted');
     }
 
     // The chunk data is now copied to remove the 4 preceding
@@ -94,7 +92,7 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
   }
 
   if (!ended) {
-    throw ErrorDescription('.png file ended prematurely: no IEND header was found');
+    throw UnsupportedError('.png file ended prematurely: no IEND header was found');
   }
 
   return chunks;

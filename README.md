@@ -17,7 +17,7 @@ In the pubspec.yaml of your flutter project, add the following dependency:
 ```yaml
 dependencies:
 ...
-png_chunks_extract: ^1.0.0
+png_chunks_extract: 1.0.1
 ```
 
 Import it:
@@ -31,7 +31,7 @@ import 'package:png_chunks_extract/png_chunks_extract.dart' as pngExtract;
 ```dart
 import 'package:png_chunks_extract/png_chunks_extract.dart' as pngExtract;
 
-final chunks = pngExtract.extract(data);
+final chunks = pngExtract.extractChunks(data);
 ```
 
 Takes the raw image file data as a Uint8List, and returns an array of chunks.
