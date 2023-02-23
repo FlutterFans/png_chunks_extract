@@ -14,20 +14,25 @@ void main() {
 
     final trunk = pngExtract.extractChunks(data);
     final names = trunk.map((e) => e['name']).toList(growable: false);
-    final lengths = trunk.map((e) => (e['data'] as List).length).toList(growable: false);
+    final lengths =
+        trunk.map((e) => (e['data'] as List).length).toList(growable: false);
 
-    expect(names, [
-      'IHDR',
-      'iCCP',
-      'pHYs',
-      'iTXt',
-      'IDAT',
-      'IDAT',
-      'IDAT',
-      'IDAT',
-      'IEND'
-    ], reason: 'extracted chunk names are as expected');
+    expect(
+        names,
+        [
+          'IHDR',
+          'iCCP',
+          'pHYs',
+          'iTXt',
+          'IDAT',
+          'IDAT',
+          'IDAT',
+          'IDAT',
+          'IEND'
+        ],
+        reason: 'extracted chunk names are as expected');
 
-    expect(lengths, [ 13, 3094, 9, 413, 16384, 16384, 16384, 7168, 0 ], reason: 'extracted chunk lengths are as expected');
+    expect(lengths, [13, 3094, 9, 413, 16384, 16384, 16384, 7168, 0],
+        reason: 'extracted chunk lengths are as expected');
   });
 }

@@ -17,7 +17,7 @@ In the pubspec.yaml of your flutter project, add the following dependency:
 ```yaml
 dependencies:
 ...
-png_chunks_extract: 1.0.1
+png_chunks_extract: 1.0.2
 ```
 
 Import it:

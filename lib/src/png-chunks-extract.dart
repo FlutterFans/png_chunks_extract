@@ -12,18 +12,21 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
   if (data[2] != 0x4E) throw ArgumentError('Invalid .png file header');
   if (data[3] != 0x47) throw ArgumentError('Invalid .png file header');
   if (data[4] != 0x0D) {
-    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError(
+        'Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
   if (data[5] != 0x0A) {
-    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError(
+        'Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
   if (data[6] != 0x1A) throw ArgumentError('Invalid .png file header');
   if (data[7] != 0x0A) {
-    throw ArgumentError('Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
+    throw ArgumentError(
+        'Invalid .png file header: possibly caused by DOS-Unix line ending conversion?');
   }
 
   var ended = false;
-  var chunks = <Map<String, dynamic>> [];
+  var chunks = <Map<String, dynamic>>[];
   var idx = 8;
 
   while (idx < data.length) {
@@ -80,7 +83,8 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
     var crcActual = int32[0];
     var crcExpect = Crc32.getCrc32(chunk);
     if (crcExpect != crcActual) {
-      throw UnsupportedError('CRC values for $name header do not match, PNG file is likely corrupted');
+      throw UnsupportedError(
+          'CRC values for $name header do not match, PNG file is likely corrupted');
     }
 
     // The chunk data is now copied to remove the 4 preceding
@@ -92,7 +96,8 @@ List<Map<String, dynamic>> extractChunks(Uint8List data) {
   }
 
   if (!ended) {
-    throw UnsupportedError('.png file ended prematurely: no IEND header was found');
+    throw UnsupportedError(
+        '.png file ended prematurely: no IEND header was found');
   }
 
   return chunks;

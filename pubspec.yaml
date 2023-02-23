@@ -1,6 +1,7 @@
 name: png_chunks_extract
 description: Extract the data chunks from a PNG file.
-version: 1.0.1
+  Useful for reading the metadata of a PNG image, or as the base of a more complete PNG parser.
+version: 1.0.2
 homepage: https://github.com/FlutterFans/png_chunks_extract
 
 environment:
@@ -14,3 +15,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.1
